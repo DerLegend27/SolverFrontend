@@ -1,0 +1,6 @@
+module Pods_SolverFrontend_SolverFrontendTests {
+  umbrella header "Pods-SolverFrontend-SolverFrontendTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
