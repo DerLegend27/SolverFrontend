@@ -8,6 +8,8 @@
 
 
 import React from 'react';
+import {HomeScreen} from './Screens/HomeScreen';
+import {ResultScreen} from './Screens/ResultScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -22,21 +24,6 @@ import {
   View,
 } from 'react-native';
 
-const HomeScreen = () => {
-  return (
-    <View>
-      <Text>Moin</Text>      
-    </View>
-  );
-};
-
-const ResultScreen = () => {
-  return (
-    <View>
-      <Text>Moin</Text>      
-    </View>
-  );
-};
 
 const Stack = createNativeStackNavigator();
 
@@ -45,26 +32,16 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen}></Stack.Screen>
-        <Stack.Screen name="Result" component={ResultScreen}></Stack.Screen>
+       <Stack.Screen name="Home" component={HomeScreen} options={{headerShown:false}}/>
+        <Stack.Screen name="Result" component={ResultScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-   
-},
 
 
 
-  
-});
 
 export default App;
