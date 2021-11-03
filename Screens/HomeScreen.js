@@ -1,21 +1,23 @@
 
-import React from "react";
+import React, { useRef } from "react";
 import {
     View,
     Text,
     StyleSheet,
     Image,
-    Button
+    Button,
+    TouchableOpacity,
+
 } from 'react-native'
+import {Camera} from '/Users/lewin/Documents/SolverFrontend/Components/Camera' 
 
 
- export const HomeScreen = () =>{
-   return(
+export const HomeScreen = () =>{
+   const camRef = useRef()
+    return(
     <View style={styles.container}>
-        <Image source = {require("/Users/lewin/Documents/SolverFrontend/Download.jpeg")}/>
-        
-        <Button title="Calculate"/>
-        
+        <Image style={{flex:0, width:"100%", height:"15%"}}source = {require("/Users/lewin/Documents/SolverFrontend/Download.jpeg")}/>
+        <Camera/>        
     </View>
    );
 }
@@ -25,8 +27,25 @@ const styles = StyleSheet.create({
       flex: 1,
       flexDirection: 'column',
       alignItems: 'center',
+      justifyContent: 'space-between'
      
-    } 
+    },
+    
+    cam: {
+        width: 300,
+        height: 300,
+    }, 
+    btn: {
+        flex: 0,
+        height: 50,
+        width: 100,
+        marginBottom: "20%",
+        backgroundColor: 'red',
+        alignItems: 'center',
+        justifyContent: 'center'
+        
+    }
+   
   });
 
 
