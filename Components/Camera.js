@@ -3,7 +3,8 @@ import {
     View,
     TouchableOpacity,
     Text,
-    StyleSheet
+    StyleSheet,
+    Image
 } from 'react-native'
 import React from "react";
 import { RNCamera } from "react-native-camera";
@@ -13,15 +14,17 @@ export class Camera extends PureComponent{
     constructor(props){
         super(props)
         this.camRef = React.createRef();
+        
     };
     
     requestCalc = async() => {
-   /*  let img = await this.takePicture()
-     if(img == "error"){
-        return
-     }
-        */
-    this.sendPicture()   
+        
+        let pic = await this.takePicture()
+        if(pic == "error"){
+            return
+        }
+        await this.sendPicture(pic)
+        this.props.navigation.navigate('Result')   
     }
     
     takePicture = async() =>{
@@ -30,15 +33,17 @@ export class Camera extends PureComponent{
             quality: 0.85,
             fixOrientation: true,
             forceUpOrientation: true,
-            base64: true
-            
+            base64: true,
+            doNotSave: true
           };
+        
         try {
             let response = await this.camRef.current.takePictureAsync(options)
-            const baseImg = response.base64
-            return baseImg
+            const basePic = response.base64
+            return basePic
+
         }catch(error){
-            console.log("picture taking error: " + error)
+            console.error("picture taking error: " + error)
             return "error"
         }
 
@@ -46,20 +51,38 @@ export class Camera extends PureComponent{
         
     }
 
-    sendPicture = async() =>{
+    sendPicture = async(pic) =>{
+        
+        const picData = new FormData();
+        const url = "http://10.0.2.2:8080"
+        picData.append("image", pic)
+        
         try{
-            const response = await fetch("http://127.0.0.1:8080")
-            console.log(response)
-        }catch{
-            console.log("Connection error")
-        }
+            const response = await fetch(
+                url,
+                {
+                    method: 'post',
+                    body: picData,
+                    headers: {
+                        "Content-Type":
+                        'multipart/form-data'
+                    }
+                }
+            )
+            
+            
+        }catch (error){
+            console.error("Connection error: " + error)
+
+        } 
     }
     
 
     render(){
     return(
-       <View>
-            <RNCamera ref={this.camRef} captureAudio={false} style={styles.cam} type={RNCamera.Constants.Type.back}></RNCamera>
+       <View style={styles.container}>
+            <RNCamera ref={this.camRef} captureAudio={false} style={styles.cam} type={RNCamera.Constants.Type.back}/>
+            
             <TouchableOpacity onPress={this.requestCalc} style={styles.btn}>
                 <Text>Calculate</Text>
             </TouchableOpacity>
@@ -71,6 +94,11 @@ export class Camera extends PureComponent{
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 0,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
     cam: {
         flex: 0,
         width: 300,
