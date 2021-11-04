@@ -7,6 +7,7 @@ import {
 } from 'react-native'
 import React from "react";
 import { RNCamera } from "react-native-camera";
+import { tsImportEqualsDeclaration } from "@babel/types";
 
 export class Camera extends PureComponent{
     constructor(props){
@@ -14,28 +15,52 @@ export class Camera extends PureComponent{
         this.camRef = React.createRef();
     };
     
+    requestCalc = async() => {
+   /*  let img = await this.takePicture()
+     if(img == "error"){
+        return
+     }
+        */
+    this.sendPicture()   
+    }
+    
     takePicture = async() =>{
        
         const options = {
             quality: 0.85,
             fixOrientation: true,
             forceUpOrientation: true,
+            base64: true
+            
           };
-        try{
-            data = await this.camRef.takePictureAsync(options)
+        try {
+            let response = await this.camRef.current.takePictureAsync(options)
+            const baseImg = response.base64
+            return baseImg
         }catch(error){
-            console.log(error.message)
-        }
+            console.log("picture taking error: " + error)
+            return "error"
         }
 
+            
+        
+    }
 
+    sendPicture = async() =>{
+        try{
+            const response = await fetch("http://127.0.0.1:8080")
+            console.log(response)
+        }catch{
+            console.log("Connection error")
+        }
+    }
     
 
     render(){
     return(
        <View>
             <RNCamera ref={this.camRef} captureAudio={false} style={styles.cam} type={RNCamera.Constants.Type.back}></RNCamera>
-            <TouchableOpacity style={styles.btn}>
+            <TouchableOpacity onPress={this.requestCalc} style={styles.btn}>
                 <Text>Calculate</Text>
             </TouchableOpacity>
         </View>
