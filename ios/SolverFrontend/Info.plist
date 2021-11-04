@@ -55,5 +55,10 @@
 	<string>This app requires access to the camera.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This app does not require access to the microphone.</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+    	<key>NSAllowsArbitraryLoads</key>
+    	<true/>
+	</dict>
 </dict>
 </plist>
