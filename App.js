@@ -6,10 +6,13 @@
  * @flow strict-local
  */
 
-import { bold } from 'ansi-colors';
-import { BackgroundColor } from 'jest-matcher-utils/node_modules/chalk';
+
 import React from 'react';
-import {Node} from 'react';
+import {HomeScreen} from './Screens/HomeScreen';
+import {ResultScreen} from './Screens/ResultScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 import {
   Button,
   SafeAreaView,
@@ -22,31 +25,23 @@ import {
 } from 'react-native';
 
 
-const Header = ({title}) => {
-  return (<Text style={{fontWeight:"bold"}}>{title}</Text>)
-}
+const Stack = createNativeStackNavigator();
 
 const App = () => {
   
   return (
-    <View style={styles.container}>
-        <Button style={styles.btn} title="Connect" color="blue"/>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+       <Stack.Screen name="Home" component={HomeScreen} options={{headerShown:false}}/>
+        <Stack.Screen name="Result" component={ResultScreen}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-   
-},
 
 
 
-  
-});
+
 
 export default App;
