@@ -61,15 +61,18 @@ export class Camera extends PureComponent{
             const response = await fetch(
                 url,
                 {
+                    
                     method: 'post',
                     body: picData,
                     headers: {
+                        Accept: "application/json",
                         "Content-Type":
                         'multipart/form-data'
+                        
                     }
                 }
             )
-            
+            console.log(response)
             
         }catch (error){
             console.error("Connection error: " + error)
