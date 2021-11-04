@@ -12,12 +12,12 @@ import {
 import {Camera} from '/Users/lewin/Documents/SolverFrontend/Components/Camera' 
 
 
-export const HomeScreen = () =>{
+export const HomeScreen = ({navigation}) =>{
    const camRef = useRef()
     return(
     <View style={styles.container}>
         <Image style={{flex:0, width:"100%", height:"15%"}}source = {require("/Users/lewin/Documents/SolverFrontend/Download.jpeg")}/>
-        <Camera/>        
+        <Camera navigation = {navigation}/>        
     </View>
    );
 }
