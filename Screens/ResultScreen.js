@@ -1,14 +1,33 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
     View,
-    Text
+    Text,
+    StyleSheet,
+    ActivityIndicator
 } from 'react-native'
+import {Result} from "/Users/lewin/Documents/SolverFrontend/Components/Result.js"
 
 
- export const ResultScreen = () =>{
-   return(
-    <View>
-        <Text>Moin</Text>
+ export const ResultScreen = ({route, navigation}) =>{
+    const {pic} = route.params
+    const [showProgress, setShowProgress] = useState(true) 
+    
+
+    return(
+    <View style={styles.container}>
+        <ActivityIndicator animating={showProgress} size="large"/>
+        <Result pic = {pic} onVisible={() => setShowProgress(false)}/>
     </View>
    );
 }
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+   
+  });
+  
