@@ -23,8 +23,7 @@ export class Camera extends PureComponent{
         if(pic == "error"){
             return
         }
-        await this.sendPicture(pic)
-        this.props.navigation.navigate('Result')   
+        this.props.navigation.navigate('Result', {pic: pic})   
     }
     
     takePicture = async() =>{
@@ -51,31 +50,7 @@ export class Camera extends PureComponent{
         
     }
 
-    sendPicture = async(pic) =>{
-        
-        const picData = new FormData();
-        const url = "http://10.0.2.2:8080"
-        picData.append("image", pic)
-        
-        try{
-            const response = await fetch(
-                url,
-                {
-                    method: 'post',
-                    body: picData,
-                    headers: {
-                        "Content-Type":
-                        'multipart/form-data'
-                    }
-                }
-            )
-            
-            
-        }catch (error){
-            console.error("Connection error: " + error)
-
-        } 
-    }
+   
     
 
     render(){
