@@ -17,7 +17,8 @@ export const HomeScreen = ({navigation}) =>{
     return(
     <View style={styles.container}>
         <Image style={{flex:0, width:"100%", height:"15%"}}source = {require("/Users/lewin/Documents/SolverFrontend/Download.jpeg")}/>
-        <Camera navigation = {navigation}/>        
+        <Camera navigation = {navigation}/>    
+            
     </View>
    );
 }
