@@ -11,40 +11,14 @@ export const Result = ({pic,onVisible}) =>{
     const[solutionText, setSolutionText] = useState("")
     
     const setIsVisible = (bool) =>{
-        _setIsVisible(bool)
+        _setIsVisible(bool) 
         if(bool){
             onVisible()
         }
     }
-    
-    
-    
-    return(
-       <View>
-            <TouchableOpacity onPress={() => displaySolution()}>
-                <Text>Click</Text>
-            </TouchableOpacity>
-            {isVisible ? <Text>{solutionText}</Text>: null}
-        </View> 
-       );
-} 
-
-const displaySolution = async(pic) => {
-    const solution = await receiveSolution(pic)
-    setSolutionText(solution)
-    setIsVisible(true)    
-}
-
-const receiveSolution = async(pic) => {    
-    const response = await sendPicture(pic)
-    const json = await response.json()
-    return json.solution
-
-}
-
-
-const sendPicture = async(pic) =>{
-        
+   
+    const sendPicture = async() =>{
+            
         const picData = new FormData();
         const url = "http://10.0.2.2:8080"
         picData.append("image", pic)
@@ -61,7 +35,7 @@ const sendPicture = async(pic) =>{
                     }
                 }
             )
-            console.log("Response: " + response)
+            
             return response
             
             
@@ -71,8 +45,29 @@ const sendPicture = async(pic) =>{
         } 
     }
 
+    const receiveSolution = async() => {    
+        const response = await sendPicture()
+        const json = await response.json()
+        console.log("Response: " + json.solution)
+        return json.solution
+    
+    }
+    
 
-
+    const displaySolution = async() => {
+        const solution = await receiveSolution()
+        setSolutionText(solution)
+        setIsVisible(true)    
+    }
+    
+    displaySolution()
+    
+    return(
+       <View>
+            {isVisible ? <Text>{solutionText}</Text>: null}
+        </View> 
+       );
+} 
 
 const styles = StyleSheet.create({
     container: {
@@ -83,3 +78,5 @@ const styles = StyleSheet.create({
     }
    
   });
+
+
