@@ -5,7 +5,7 @@ import {
     StyleSheet,
     ActivityIndicator
 } from 'react-native'
-import {Result} from "/Users/lewin/Documents/SolverFrontend/Components/Result.js"
+import {Result} from "../Components/Result.js"
 
 
  export const ResultScreen = ({route, navigation}) =>{

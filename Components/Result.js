@@ -9,6 +9,7 @@ import React, { useState, useRef, useEffect } from "react"
 export const Result = ({pic,onVisible}) =>{
     const[isVisible, _setIsVisible] = useState(false) 
     const[solutionText, setSolutionText] = useState("")
+    
     const setIsVisible = (bool) =>{
         _setIsVisible(bool)
         if(bool){

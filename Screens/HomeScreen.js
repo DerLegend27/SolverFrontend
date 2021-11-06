@@ -9,14 +9,14 @@ import {
     TouchableOpacity,
 
 } from 'react-native'
-import {Camera} from '/Users/lewin/Documents/SolverFrontend/Components/Camera' 
+import {Camera} from '../Components/Camera' 
 
 
 export const HomeScreen = ({navigation}) =>{
    const camRef = useRef()
     return(
     <View style={styles.container}>
-        <Image style={{flex:0, width:"100%", height:"15%"}}source = {require("/Users/lewin/Documents/SolverFrontend/Download.jpeg")}/>
+        <Image style={{flex:0, width:"100%", height:"15%"}}source = {require("../Download.jpeg")}/>
         <Camera navigation = {navigation}/>    
             
     </View>
