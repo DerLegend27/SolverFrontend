@@ -2,12 +2,8 @@
 import React, { useRef } from "react";
 import {
     View,
-    Text,
     StyleSheet,
-    Image,
-    Button,
-    TouchableOpacity,
-
+    Image
 } from 'react-native'
 import {Camera} from '../Components/Camera' 
 

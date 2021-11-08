@@ -4,11 +4,9 @@ import {
     TouchableOpacity,
     Text,
     StyleSheet,
-    Image
 } from 'react-native'
 import React from "react";
 import { RNCamera } from "react-native-camera";
-import { tsImportEqualsDeclaration } from "@babel/types";
 
 export class Camera extends PureComponent{
     constructor(props){
@@ -43,6 +41,7 @@ export class Camera extends PureComponent{
 
         }catch(error){
             console.error("picture taking error: " + error)
+            alert("Foto konnte nicht aufgenommen werden")
             return "error"
         }
 
