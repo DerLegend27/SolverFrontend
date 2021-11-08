@@ -2,22 +2,53 @@ import {
 StyleSheet,
 View,
 Text,
-TouchableOpacity
 } from "react-native"
-import React, { useState, useRef, useEffect } from "react"
+import React, {PureComponent } from "react"
 
-export const Result = ({pic,onVisible}) =>{
-    const[isVisible, _setIsVisible] = useState(false) 
-    const[solutionText, setSolutionText] = useState("")
-    
-    const setIsVisible = (bool) =>{
-        _setIsVisible(bool) 
-        if(bool){
-            onVisible()
+export class Result extends PureComponent{
+    constructor(props){
+        super(props)
+        
+        this.onVisible = props.onVisible
+        this.pic = props.pic
+        
+        
+
+        this.state = {
+            responseText: "",
+            isVisible: false,
+            hasFailure: false
         }
     }
-   
-    const sendPicture = async() =>{
+    
+    componentDidMount(){
+        this.displayResponseText(this.pic)
+    }
+    
+    render(){
+    
+        if(this.state.isVisible && this.state.hasFailure){
+            return <FailureView failureMessage={this.state.responseText}/>
+            }
+        else if(this.state.isVisible){
+            return <SuccessView solutionText={this.state.responseText}/>
+            }
+        else{
+            return null
+        }
+
+    }
+
+    setIsVisible = (bool) =>{
+        this.setState({
+            isVisible : bool
+        })
+        if(bool){
+            this.onVisible()
+        }
+    }
+    
+    sendPicture = async(pic) =>{
             
         const picData = new FormData();
         const url = "http://10.0.2.2:8080"
@@ -45,29 +76,59 @@ export const Result = ({pic,onVisible}) =>{
         } 
     }
 
-    const receiveSolution = async() => {    
-        const response = await sendPicture()
-        const json = await response.json()
-        console.log("Response: " + json.solution)
-        return json.solution
+    receiveResponseText = async(pic) => {    
+        try{
+            const response = await this.sendPicture(pic)
+            const json = await response.json()
+            
+            if(json.status == "failure"){
+                const failureMessage = "Aufgabe konnte nicht erkannt werden"
+                this.setState({
+                    hasFailure: true
+                })
+                return failureMessage
+            }else{
+                return json.solution
+            }
+            
+        }catch (error){
+            console.error("Json Receiving Error: " + error)
+        }
+        
     
     }
-    
 
-    const displaySolution = async() => {
-        const solution = await receiveSolution()
-        setSolutionText(solution)
-        setIsVisible(true)    
+
+    displayResponseText = async(pic) => {
+        try{
+            const responseText = await this.receiveResponseText(pic)
+            this.setState({
+                responseText : responseText
+            })
+            this.setIsVisible(true)  
+        }catch(error){
+            console.error("Displaying Error: " + error)
+        }
+          
     }
-    
-    displaySolution()
-    
-    return(
-       <View>
-            {isVisible ? <Text>{solutionText}</Text>: null}
-        </View> 
-       );
-} 
+
+}
+
+const FailureView = ({failureMessage}) =>{
+    return (
+        <View>
+            <Text>{failureMessage}</Text>
+        </View>
+    )
+}
+const SuccessView = ({solutionText}) =>{
+    return (
+        <View>
+            <Text>{solutionText}</Text>
+        </View>
+    )
+}
+
 
 const styles = StyleSheet.create({
     container: {
