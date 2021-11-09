@@ -2,6 +2,7 @@ import {
 StyleSheet,
 View,
 Text,
+TouchableOpacity,
 } from "react-native"
 import React, {PureComponent } from "react"
 
@@ -9,11 +10,8 @@ export class Result extends PureComponent{
     constructor(props){
         super(props)
         
-        this.onVisible = props.onVisible
-        this.pic = props.pic
+        this.navigation = props.navigation
         
-        
-
         this.state = {
             responseText: "",
             isVisible: false,
@@ -21,17 +19,26 @@ export class Result extends PureComponent{
         }
     }
     
-    componentDidMount(){
-        this.displayResponseText(this.pic)
-    }
+    
     
     render(){
     
         if(this.state.isVisible && this.state.hasFailure){
-            return <FailureView failureMessage={this.state.responseText}/>
+            return( 
+            <View>
+                <FailureView failureMessage={this.state.responseText}/>
+            </View>
+             )
             }
         else if(this.state.isVisible){
-            return <SuccessView solutionText={this.state.responseText}/>
+            return (
+            <View style={styles.container}>
+                <SuccessView solutionText={this.state.responseText}/>
+                <TouchableOpacity onPress={()=>this.navigation.goBack()}>
+                    <Text>Zurück</Text>
+                </TouchableOpacity>
+            </View>
+            )
             }
         else{
             return null
@@ -43,9 +50,6 @@ export class Result extends PureComponent{
         this.setState({
             isVisible : bool
         })
-        if(bool){
-            this.onVisible()
-        }
     }
     
     sendPicture = async(pic) =>{
@@ -105,7 +109,7 @@ export class Result extends PureComponent{
             this.setState({
                 responseText : responseText
             })
-            this.setIsVisible(true)  
+            this.setIsVisible(true)
         }catch(error){
             console.error("Displaying Error: " + error)
         }

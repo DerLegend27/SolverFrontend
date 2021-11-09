@@ -9,13 +9,29 @@ import {Result} from "../Components/Result.js"
 
  export const ResultScreen = ({route, navigation}) =>{
     const {pic} = route.params
-    const [showProgress, setShowProgress] = useState(true) 
+    const [showProgress, setShowProgress] = useState(true)
+    const resultRef = useRef()
+    useEffect(() => {
+      let mounted = true
+      resultRef.current.displayResponseText(pic)
+        .then(() => {
+          if(mounted) {
+            setShowProgress(false)
+          }
+
+      return () => {
+        mounted = false
+      }   
+        })
+    })
+      
+    
     
 
     return(
     <View style={styles.container}>
         <ActivityIndicator animating={showProgress} size="large"/>
-        <Result pic = {pic} onVisible={() => setShowProgress(false)}/>
+        <Result ref={resultRef} navigation={navigation}/>
     </View>
    );
 }
