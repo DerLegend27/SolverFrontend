@@ -49,7 +49,6 @@ export class Camera extends PureComponent{
         
     }
 
-   
     
 
     render(){
