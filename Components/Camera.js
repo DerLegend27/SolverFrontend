@@ -4,9 +4,12 @@ import {
     TouchableOpacity,
     Text,
     StyleSheet,
+    PixelRatio,
 } from 'react-native'
 import React from "react";
 import { RNCamera } from "react-native-camera";
+import {wp, hp, absolutePx} from '../Helper/Converter'
+import {colors} from "../Assets/colors"
 
 export class Camera extends PureComponent{
     constructor(props){
@@ -16,7 +19,6 @@ export class Camera extends PureComponent{
     };
     
     requestCalc = async() => {
-        
         let pic = await this.takePicture()
         if(pic == "error"){
             return
@@ -25,7 +27,6 @@ export class Camera extends PureComponent{
     }
     
     takePicture = async() =>{
-       
         const options = {
             quality: 0.85,
             fixOrientation: true,
@@ -51,15 +52,16 @@ export class Camera extends PureComponent{
 
    
     
-
     render(){
     return(
        <View style={styles.container}>
-            <RNCamera ref={this.camRef} captureAudio={false} style={styles.cam} type={RNCamera.Constants.Type.back}/>
+            <RNCamera ref={this.camRef} captureAudio={false} style={styles.cam} type={RNCamera.Constants.Type.back}>
+                <TouchableOpacity onPress={this.requestCalc} style={styles.btn}>
+                    <Text style={styles.btnTxt}>Scannen</Text>
+                </TouchableOpacity>
+            </RNCamera>
             
-            <TouchableOpacity onPress={this.requestCalc} style={styles.btn}>
-                <Text>Calculate</Text>
-            </TouchableOpacity>
+            
         </View>
     );
     }
@@ -75,19 +77,27 @@ const styles = StyleSheet.create({
     },
     cam: {
         flex: 0,
-        width: 300,
-        height: 300,
+        width: "100%",
+        height: "100%",
+        alignItems: 'center',
     }, 
     btn: {
         flex: 0,
-        height: 50,
-        width: 100,
-        marginBottom: "20%",
-        backgroundColor: 'red',
+        height: 55,
+        width: wp(311),
+        borderRadius: 8,
+        marginTop: hp(558),
+        backgroundColor: colors.primaryColor,
         alignItems: 'center',
         justifyContent: 'center'
         
+    },
+    btnTxt:{
+        fontSize: 17,
+        color: colors.fontWhite
+
     }
    
   });
+
 

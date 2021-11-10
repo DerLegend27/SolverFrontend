@@ -3,44 +3,38 @@ import React, { useRef } from "react";
 import {
     View,
     StyleSheet,
-    Image
+    Image,
+    Text
 } from 'react-native'
 import {Camera} from '../Components/Camera' 
+
 
 
 export const HomeScreen = ({navigation}) =>{
    const camRef = useRef()
     return(
     <View style={styles.container}>
-        <Image style={{flex:0, width:"100%", height:"15%"}}source = {require("../Download.jpeg")}/>
-        <Camera navigation = {navigation}/>    
-            
+        <Camera style={styles.cam} navigation = {navigation}/>     
     </View>
    );
 }
 
 const styles = StyleSheet.create({
+    
     container: {
-      flex: 1,
+      flex: 0,
       flexDirection: 'column',
       alignItems: 'center',
-      justifyContent: 'space-between'
+      justifyContent: "center",
+      width: "100%",
+      height: "100%",
      
     },
     
     cam: {
-        width: 300,
-        height: 300,
-    }, 
-    btn: {
         flex: 0,
-        height: 50,
-        width: 100,
-        marginBottom: "20%",
-        backgroundColor: 'red',
-        alignItems: 'center',
-        justifyContent: 'center'
-        
+        width: "100%",
+        height: "100%"
     }
    
   });
