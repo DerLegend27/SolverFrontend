@@ -14,7 +14,7 @@ export const HomeScreen = ({navigation}) =>{
    const camRef = useRef()
     return(
     <View style={styles.container}>
-        <Camera style={styles.cam} navigation = {navigation}/>     
+        <Camera style={styles.cam} navigation = {navigation}/>   
     </View>
    );
 }
