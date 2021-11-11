@@ -4,6 +4,7 @@ import {
     StyleSheet,
     ActivityIndicator
 } from 'react-native'
+import { colors } from "../Assets/colors.js";
 import {Result} from "../Components/Result.js"
 
 
@@ -27,7 +28,7 @@ import {Result} from "../Components/Result.js"
 
     return(
     <View style={styles.container}>
-        <ActivityIndicator animating={showProgress} size="large"/>
+        <ActivityIndicator animating={showProgress} size="large" color={colors.primaryColor}/>
         <Result ref={resultRef} navigation={navigation}/>
     </View>
    );
