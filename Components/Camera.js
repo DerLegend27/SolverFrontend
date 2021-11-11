@@ -10,6 +10,13 @@ import React from "react";
 import { RNCamera } from "react-native-camera";
 import {wp, hp, absolutePx} from '../Helper/Converter'
 import {colors} from "../Assets/colors"
+import Svg, { Rect } from "react-native-svg";
+import {
+    widthPercentageToDP as wp2dp,
+    heightPercentageToDP as hp2dp,
+  } from 'react-native-responsive-screen';
+  
+
 
 export class Camera extends PureComponent{
     constructor(props){
@@ -56,18 +63,35 @@ export class Camera extends PureComponent{
     return(
        <View style={styles.container}>
             <RNCamera ref={this.camRef} captureAudio={false} style={styles.cam} type={RNCamera.Constants.Type.back}>
+                <ScanWindow/>
                 <TouchableOpacity onPress={this.requestCalc} style={styles.btn}>
                     <Text style={styles.btnTxt}>Scannen</Text>
                 </TouchableOpacity>
             </RNCamera>
             
             
-        </View>
+        </View> 
     );
     }
     
     
 }
+
+const ScanWindow = () =>{
+    return( 
+        <Svg width="" height="100" style={{backgroundColor:'#33AAFF'}}>
+           <Rect 
+            x="40"
+            y="40"
+            width="150"
+            height="50"
+            strokeWidth="5"
+            stroke= {colors.primaryColor}
+            />
+        </Svg>
+    )
+}
+
 
 const styles = StyleSheet.create({
     container: {
@@ -89,7 +113,8 @@ const styles = StyleSheet.create({
         marginTop: hp(558),
         backgroundColor: colors.primaryColor,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        position: "absolute",
         
     },
     btnTxt:{
@@ -97,6 +122,7 @@ const styles = StyleSheet.create({
         color: colors.fontWhite
 
     }
+    
    
   });
 
