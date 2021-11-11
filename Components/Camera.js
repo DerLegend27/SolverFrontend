@@ -1,16 +1,18 @@
-import { PureComponent } from "react";
+import { PureComponent, useEffect, useState } from "react";
 import {
     View,
     TouchableOpacity,
     Text,
     StyleSheet,
     PixelRatio,
+    PanResponder,
 } from 'react-native'
 import React from "react";
 import { RNCamera } from "react-native-camera";
 import {wp, hp, absolutePx} from '../Helper/Converter'
 import {colors} from "../Assets/colors"
-import Svg, { Rect } from "react-native-svg";
+import { ScanWindow } from "./ScanWindow"
+import Svg, { Polyline, G, Rect, Defs, Use } from "react-native-svg";
 import {
     widthPercentageToDP as wp2dp,
     heightPercentageToDP as hp2dp,
@@ -63,7 +65,19 @@ export class Camera extends PureComponent{
     return(
        <View style={styles.container}>
             <RNCamera ref={this.camRef} captureAudio={false} style={styles.cam} type={RNCamera.Constants.Type.back}>
-                <ScanWindow/>
+                <View style={styles.menuBar}>
+                    <TouchableOpacity>
+                        <Image></Image>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Image></Image>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Image></Image>
+                    </TouchableOpacity>
+                    
+                </View>
+                <ScanWindow style={styles.scanWindow}/>
                 <TouchableOpacity onPress={this.requestCalc} style={styles.btn}>
                     <Text style={styles.btnTxt}>Scannen</Text>
                 </TouchableOpacity>
@@ -77,20 +91,8 @@ export class Camera extends PureComponent{
     
 }
 
-const ScanWindow = () =>{
-    return( 
-        <Svg width="" height="100" style={{backgroundColor:'#33AAFF'}}>
-           <Rect 
-            x="40"
-            y="40"
-            width="150"
-            height="50"
-            strokeWidth="5"
-            stroke= {colors.primaryColor}
-            />
-        </Svg>
-    )
-}
+
+
 
 
 const styles = StyleSheet.create({
@@ -107,20 +109,24 @@ const styles = StyleSheet.create({
     }, 
     btn: {
         flex: 0,
+        flexDirection: "column-reverse",
         height: 55,
         width: wp(311),
         borderRadius: 8,
-        marginTop: hp(558),
+        marginTop: "auto",
+        marginBottom: hp(32),
         backgroundColor: colors.primaryColor,
         alignItems: 'center',
         justifyContent: 'center',
-        position: "absolute",
         
     },
     btnTxt:{
         fontSize: 17,
         color: colors.fontWhite
 
+    },
+    menuBar:{
+        flexDirection:"row"
     }
     
    
