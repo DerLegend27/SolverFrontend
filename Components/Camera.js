@@ -6,6 +6,7 @@ import {
     StyleSheet,
     PixelRatio,
     PanResponder,
+    Image
 } from 'react-native'
 import React from "react";
 import { RNCamera } from "react-native-camera";
@@ -65,17 +66,21 @@ export class Camera extends PureComponent{
     return(
        <View style={styles.container}>
             <RNCamera ref={this.camRef} captureAudio={false} style={styles.cam} type={RNCamera.Constants.Type.back}>
+                
+               
+            
                 <View style={styles.menuBar}>
-                    <TouchableOpacity>
-                        <Image></Image>
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Image></Image>
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Image></Image>
-                    </TouchableOpacity>
-                    
+                        <TouchableOpacity style={styles.menuBtn}>
+                            <Image style={styles.menuImg} source={require("../Assets/Images/menu.png")}/>
+                        </TouchableOpacity>
+                        <View style={{flexDirection:"row-reverse", flex:1}}>
+                            <TouchableOpacity style={styles.menuBtn}>
+                                <Image style={styles.menuImg} source={require("../Assets/Images/help.png")}/>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.menuBtn}>
+                                <Image style={styles.flashImg} source={require("../Assets/Images/flash.png")}/>
+                            </TouchableOpacity>
+                        </View>
                 </View>
                 <ScanWindow style={styles.scanWindow}/>
                 <TouchableOpacity onPress={this.requestCalc} style={styles.btn}>
@@ -126,7 +131,26 @@ const styles = StyleSheet.create({
 
     },
     menuBar:{
-        flexDirection:"row"
+        flex:0,
+        flexDirection:"row",
+        marginTop:hp(56),
+        marginHorizontal:wp(16),
+        
+       
+    },
+
+    menuImg:{
+        width:wp(32),
+        height:hp(32)
+    },
+    flashImg:{
+        width:wp(32),
+        height:hp(32),
+        marginRight:wp(16)
+    },
+    menuBtn:{
+        flex:-1,
+        
     }
     
    
