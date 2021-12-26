@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     menuBar:{
         flex:0,
         flexDirection:"row",
-        marginTop:hp(56),
+        marginTop:hp(30),
         marginHorizontal:wp(16),
         
        
