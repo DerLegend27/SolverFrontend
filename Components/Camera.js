@@ -67,9 +67,8 @@ export class Camera extends PureComponent{
        <View style={styles.container}>
             <RNCamera ref={this.camRef} captureAudio={false} style={styles.cam} type={RNCamera.Constants.Type.back}>
                 
-               
-            
-                <View style={styles.menuBar}>
+
+               <View style={styles.menuBar}>
                         <TouchableOpacity style={styles.menuBtn}>
                             <Image style={styles.menuImg} source={require("../Assets/Images/menu.png")}/>
                         </TouchableOpacity>
@@ -82,6 +81,7 @@ export class Camera extends PureComponent{
                             </TouchableOpacity>
                         </View>
                 </View>
+                
                 <ScanWindow style={styles.scanWindow}/>
                 <TouchableOpacity onPress={this.requestCalc} style={styles.btn}>
                     <Text style={styles.btnTxt}>Scannen</Text>
