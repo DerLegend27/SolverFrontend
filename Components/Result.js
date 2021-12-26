@@ -12,15 +12,19 @@ export class Result extends PureComponent{
         super(props)
         
         this.navigation = props.navigation
+        
+        this.isVisible = false
+        this.hasFailure = false
+
 
         this.state = {
             responseText: "",
-            isVisible: false,
-            hasFailure: false
+           
         }
     }
     
-    
+  
+
     render(){
     
         if(this.state.isVisible && this.state.hasFailure){
@@ -40,11 +44,6 @@ export class Result extends PureComponent{
 
     }
 
-    setIsVisible = (bool) =>{
-        this.setState({
-            isVisible : bool
-        })
-    }
     
     sendPicture = async(pic) =>{
             
@@ -53,9 +52,13 @@ export class Result extends PureComponent{
         picData.append("image", pic)
         
         try{
-            const response = await fetch(
+            const controller = new AbortController()
+            const response = "Moinsen"
+            const timeoutId = setTimeout(() => controller.abort(), 5000)
+            response = await fetch(
                 url,
                 {
+                    signal: controller.signal,
                     method: 'post',
                     body: picData,
                     headers: {
@@ -64,7 +67,7 @@ export class Result extends PureComponent{
                     }
                 }
             )
-            
+            console.log(response)
             return response
             
             
@@ -81,7 +84,7 @@ export class Result extends PureComponent{
             if(json.status == "failure"){
                 const failureMessage = "Aufgabe konnte nicht erkannt werden"
                 this.setState({
-                    hasFailure: true
+                    hasFailure : true
                 })
                 return failureMessage
             }else{
@@ -90,6 +93,9 @@ export class Result extends PureComponent{
             
         }catch (error){
             console.error("Json Receiving Error: " + error)
+            const failureMessage = "Verbindungsfehler"
+            this.hasFailure = true
+            return failureMessage
         }
         
     
@@ -98,11 +104,15 @@ export class Result extends PureComponent{
 
     displayResponseText = async(pic) => {
         try{
+            
             const responseText = await this.receiveResponseText(pic)
             this.setState({
                 responseText : responseText
             })
-            this.setIsVisible(true)  
+            console.log("im display: " + responseText)
+            this.setState({
+                isVisible : true
+            })
         }catch(error){
             console.error("Displaying Error: " + error)
         }
@@ -112,6 +122,7 @@ export class Result extends PureComponent{
 }
 
 const FailureView = ({failureMessage}) =>{
+    console.log("In FailureVIew")
     return (
         <View>
             <Text>{failureMessage}</Text>
