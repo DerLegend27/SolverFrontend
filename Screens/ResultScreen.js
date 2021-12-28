@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import {
     View,
     StyleSheet,
-    ActivityIndicator
+    ActivityIndicator,
+    ImageBackground
 } from 'react-native'
 import { colors } from "../Assets/colors.js";
 import {Result} from "../Components/Result.js"
@@ -26,11 +27,15 @@ import {Result} from "../Components/Result.js"
         })
     })
 
+    const base64pic = 'data:image/png;base64,' + pic 
+
     return(
-    <View style={styles.container}>
-        <ActivityIndicator animating={showProgress} size="large" color={colors.primaryColor}/>
-        <Result ref={resultRef} navigation={navigation}/>
-    </View>
+    
+        <ImageBackground source={{uri:base64pic}} style={styles.container} blurRadius={8}>
+          <ActivityIndicator animating={showProgress} size="large" color={colors.primaryColor}/>
+          <Result ref={resultRef} navigation={navigation}/>
+        </ImageBackground>
+    
    );
 }
 
@@ -39,8 +44,10 @@ const styles = StyleSheet.create({
       flex: 1,
       flexDirection: 'column',
       alignItems: 'center',
-      justifyContent: 'center'
-    }
+      justifyContent: 'center',
+     
+    },
+    
    
   });
   
