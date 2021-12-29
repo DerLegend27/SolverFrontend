@@ -39,14 +39,20 @@ export class ScanWindow extends PureComponent {
 
         this.startY = (this.maxHeight-this.startHeight)/2
 
-        this.prevWidth = this.startWidth
-        this.prevHeight = this.startHeight
+        this.actualWidth = this.startWidth
+        this.actualHeight = this.startHeight
+
+        this.prevWidth = this.actualWidth
+        this.prevHeight = this.actualHeight
 
         this.state = {
-            actualWidth: this.prevWidth,
-            actualHeight: this.prevHeight,
+            leftX: this.calcLeftX(),
+            rightX: this.calcRightX(),
+            topY: this.calcTopY(),
+            bottomY: this.calcBottomY()
 
         }
+      
 
         this.panResponder = PanResponder.create({
             onStartShouldSetPanResponder: this.alwaysTrue,
@@ -58,10 +64,11 @@ export class ScanWindow extends PureComponent {
 
     alwaysTrue = () => true
 
+    
     handlePanResponderGrant = () => {
-        this.prevWidth = this.state.actualWidth
-        this.prevHeight = this.state.actualHeight
-    }
+        this.prevWidth = this.actualWidth
+        this.prevHeight = this.actualHeight
+    } 
 
     handlePanResponderMove = (e, gestureState) => {
 
@@ -69,14 +76,19 @@ export class ScanWindow extends PureComponent {
         const newHeight = gestureState.dy + this.prevHeight
 
         if (newWidth <= this.maxWidth && newWidth >= this.minWidth) {
+            this.actualWidth = newWidth
             this.setState({
-                actualWidth: gestureState.dx + this.prevWidth,
-            })
+                leftX: this.calcLeftX(),
+                rightX: this.calcRightX()
+    
+            }) 
         }
         if (newHeight <= (this.startHeight + this.startY) && newHeight >= this.minHeight) {
+            this.actualHeight = newHeight
             this.setState({
-                actualHeight: gestureState.dy + this.prevHeight,
-            })
+                topY: this.calcTopY(),
+                bottomY: this.calcBottomY()
+            }) 
         }
     }
 
@@ -87,8 +99,8 @@ export class ScanWindow extends PureComponent {
 
                 {/* Left-Top Corner */}
                 <Polyline
-                    x={this.maxWidth - this.state.actualWidth + this.cornerPadding}
-                    y={this.startY - (this.state.actualHeight - this.startHeight) + this.cornerPadding}
+                    x={this.state.leftX}
+                    y={this.state.topY}
                     points="0,30 0,0 30,0"
                     fill="none"
                     stroke={colors.primaryColor}
@@ -99,8 +111,8 @@ export class ScanWindow extends PureComponent {
 
                 {/* Right-Top Corner */}
                 <Polyline
-                    x={this.state.actualWidth - this.cornerPadding}
-                    y={this.startY - (this.state.actualHeight - this.startHeight) + this.cornerPadding}
+                    x={this.state.rightX}
+                    y={this.state.topY}
                     points="0,30 0,0 30,0"
                     fill="none"
                     stroke={colors.primaryColor}
@@ -114,8 +126,8 @@ export class ScanWindow extends PureComponent {
 
                 {/* Bottom-Left Corner */}
                 <Polyline
-                    x={this.maxWidth - this.state.actualWidth + this.cornerPadding}
-                    y={this.startY + this.state.actualHeight - this.cornerPadding}
+                    x={this.state.leftX}
+                    y={this.state.bottomY}
                     points="0,30 0,0 30,0"
                     fill="none"
                     stroke={colors.primaryColor}
@@ -129,8 +141,8 @@ export class ScanWindow extends PureComponent {
 
                 {/* Bottom-Right Corner */}
                 <Polyline
-                    x={this.state.actualWidth - this.cornerPadding}
-                    y={this.startY + this.state.actualHeight - this.cornerPadding}
+                    x={this.state.rightX}
+                    y={this.state.bottomY}
                     points="0,30 0,0 30,0"
                     fill="none"
                     stroke={colors.primaryColor}
@@ -146,6 +158,19 @@ export class ScanWindow extends PureComponent {
         )
     }
 
+    calcLeftX = () =>{
+        return this.maxWidth - this.actualWidth + this.cornerPadding
+    }
+    calcRightX = () =>{
+        return this.actualWidth - this.cornerPadding
+    }
+    calcTopY = () => {
+        return this.startY - (this.actualHeight - this.startHeight) + this.cornerPadding
+    }
+    calcBottomY = () => {
+        return this.startY + this.actualHeight - this.cornerPadding
+    }
+
 
 }
 
@@ -154,6 +179,7 @@ const styles = StyleSheet.create({
         height: "auto",
         flex: 0,
         position: "absolute",
-        marginTop: hp(100)
+        marginTop: hp(100),
+        
     }
 });
