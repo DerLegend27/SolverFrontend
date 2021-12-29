@@ -18,13 +18,14 @@ import {
     widthPercentageToDP as wp2dp,
     heightPercentageToDP as hp2dp,
   } from 'react-native-responsive-screen';
-  
+import ImageEditor from "@react-native-community/image-editor";
 
 
 export class Camera extends PureComponent{
     constructor(props){
         super(props)
         this.camRef = React.createRef();
+        this.scanRef = React.createRef();
         
     };
     
@@ -33,6 +34,26 @@ export class Camera extends PureComponent{
         if(pic == "error"){
             return
         }
+
+        const offX = this.scanRef.current.state.leftX
+        const offY = this.scanRef.current.state.topY
+        const width = this.scanRef.current.state.rightX
+        const height = this.scanRef.current.state.bottomY
+
+        const uri = 'data:image/png;base64,' + pic
+        const cropData = {
+            offset: {x: offX, y: offY},
+            size: {width: width, height: height}
+        }
+        
+        console.log("Moin");
+        ImageEditor.cropImage(uri, cropData).then(url => {
+            console.log("Cropped image uri", url);
+          }).catch(error =>{
+            console.log("Cropping error: " + error.message)
+            
+          })
+
         this.props.navigation.navigate('Result', {pic: pic})   
     }
     
@@ -82,7 +103,7 @@ export class Camera extends PureComponent{
                         </View>
                 </View>
                 
-                <ScanWindow style={styles.scanWindow}/>
+                <ScanWindow style={styles.scanWindow} ref={this.scanRef}/>
                 <TouchableOpacity onPress={this.requestCalc} style={styles.btn}>
                     <Text style={styles.btnTxt}>Scannen</Text>
                 </TouchableOpacity>
