@@ -53,7 +53,6 @@ export class Result extends PureComponent{
         
         try{
             const controller = new AbortController()
-            const response = "Moinsen"
             const timeoutId = setTimeout(() => controller.abort(), 5000)
             response = await fetch(
                 url,
@@ -67,7 +66,6 @@ export class Result extends PureComponent{
                     }
                 }
             )
-            console.log(response)
             return response
             
             
@@ -115,6 +113,7 @@ export class Result extends PureComponent{
             })
         }catch(error){
             console.error("Displaying Error: " + error)
+            throw error
         }
           
     }
