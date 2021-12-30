@@ -10,111 +10,116 @@ import {
 } from 'react-native'
 import React from "react";
 import { RNCamera } from "react-native-camera";
-import {wp, hp, absolutePx} from '../Helper/Converter'
-import {colors} from "../Assets/colors"
+import { wp, hp, absolutePx } from '../Helper/Converter'
+import { colors } from "../Assets/colors"
 import { ScanWindow } from "./ScanWindow"
 import Svg, { Polyline, G, Rect, Defs, Use } from "react-native-svg";
 import {
     widthPercentageToDP as wp2dp,
     heightPercentageToDP as hp2dp,
-  } from 'react-native-responsive-screen';
+} from 'react-native-responsive-screen';
 import ImageEditor from "@react-native-community/image-editor";
 
 
-export class Camera extends PureComponent{
-    constructor(props){
+export class Camera extends PureComponent {
+    constructor(props) {
         super(props)
         this.camRef = React.createRef();
         this.scanRef = React.createRef();
-        
+
     };
-    
-    requestCalc = async() => {
+
+    requestCalc = async () => {
         let pic = await this.takePicture()
-        if(pic == "error"){
+        if (pic == "error") {
             return
         }
 
+       
         const offX = this.scanRef.current.state.leftX
         const offY = this.scanRef.current.state.topY
         const width = this.scanRef.current.state.rightX
         const height = this.scanRef.current.state.bottomY
 
-        const uri = 'data:image/png;base64,' + pic
-        const cropData = {
-            offset: {x: offX, y: offY},
-            size: {width: width, height: height}
-        }
-        
-        console.log("Moin");
-        ImageEditor.cropImage(uri, cropData).then(url => {
-            console.log("Cropped image uri", url);
-          }).catch(error =>{
-            console.log("Cropping error: " + error.message)
-            
-          })
+        const uri = pic
 
-        this.props.navigation.navigate('Result', {pic: pic})   
+        const cropData = {
+            offset: { x: offX, y: offY },
+            size: { width: width, height: height }
+        }
+
+
+        var RNFS = require('react-native-fs');
+
+        ImageEditor.cropImage(uri, cropData).then(url => {
+            RNFS.readFile(url, "base64").then(base64Pic => {
+                this.props.navigation.navigate('Result', { croppedPic: base64Pic, pic: pic })
+            }).catch(e =>{throw e})
+        }).catch(error => {
+            console.log("Cropping error: " + error.message)
+            this.props.navigation.navigate('Result', { croppedPic: "Error", pic: pic })
+        })
+
+
+
     }
-    
-    takePicture = async() =>{
+
+    takePicture = async () => {
         const options = {
             quality: 0.85,
             fixOrientation: true,
             forceUpOrientation: true,
-            base64: true,
-            doNotSave: true
-          };
-        
+        };
+
         try {
             let response = await this.camRef.current.takePictureAsync(options)
-            const basePic = response.base64
-            return basePic
+            const uriPic = response.uri
+            return uriPic
 
-        }catch(error){
+        } catch (error) {
             console.error("picture taking error: " + error)
             alert("Foto konnte nicht aufgenommen werden")
             return "error"
         }
 
-            
-        
+
+
     }
 
-   
-    
-    render(){
-    return(
-       <View style={styles.container}>
-            <RNCamera ref={this.camRef} captureAudio={false} style={styles.cam} type={RNCamera.Constants.Type.back}>
-                
 
-               <View style={styles.menuBar}>
+
+    render() {
+        return (
+            <View style={styles.container}>
+                <RNCamera ref={this.camRef} captureAudio={false} style={styles.cam} type={RNCamera.Constants.Type.back}>
+
+
+                    <View style={styles.menuBar}>
                         <TouchableOpacity style={styles.menuBtn}>
-                            <Image style={styles.menuImg} source={require("../Assets/Images/menu.png")}/>
+                            <Image style={styles.menuImg} source={require("../Assets/Images/menu.png")} />
                         </TouchableOpacity>
-                        <View style={{flexDirection:"row-reverse", flex:1}}>
+                        <View style={{ flexDirection: "row-reverse", flex: 1 }}>
                             <TouchableOpacity style={styles.menuBtn}>
-                                <Image style={styles.menuImg} source={require("../Assets/Images/help.png")}/>
+                                <Image style={styles.menuImg} source={require("../Assets/Images/help.png")} />
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.menuBtn}>
-                                <Image style={styles.flashImg} source={require("../Assets/Images/flash.png")}/>
+                                <Image style={styles.flashImg} source={require("../Assets/Images/flash.png")} />
                             </TouchableOpacity>
                         </View>
-                </View>
-                
-                <ScanWindow style={styles.scanWindow} ref={this.scanRef}/>
-                <TouchableOpacity onPress={this.requestCalc} style={styles.btn}>
-                    <Text style={styles.btnTxt}>Scannen</Text>
-                </TouchableOpacity>
-            </RNCamera>
-            
-            
-        </View> 
-    );
+                    </View>
+
+                    <ScanWindow style={styles.scanWindow} ref={this.scanRef} />
+                    <TouchableOpacity onPress={this.requestCalc} style={styles.btn}>
+                        <Text style={styles.btnTxt}>Scannen</Text>
+                    </TouchableOpacity>
+                </RNCamera>
+
+
+            </View>
+        );
     }
-    
-    
+
+
 }
 
 
@@ -132,7 +137,7 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "100%",
         alignItems: 'center',
-    }, 
+    },
     btn: {
         flex: 0,
         flexDirection: "column-reverse",
@@ -144,37 +149,37 @@ const styles = StyleSheet.create({
         backgroundColor: colors.primaryColor,
         alignItems: 'center',
         justifyContent: 'center',
-        
+
     },
-    btnTxt:{
+    btnTxt: {
         fontSize: 17,
         color: colors.fontWhite
 
     },
-    menuBar:{
-        flex:0,
-        flexDirection:"row",
-        marginTop:hp(30),
-        marginHorizontal:wp(16),
-        
-       
+    menuBar: {
+        flex: 0,
+        flexDirection: "row",
+        marginTop: hp(30),
+        marginHorizontal: wp(16),
+
+
     },
 
-    menuImg:{
-        width:wp(32),
-        height:hp(32)
+    menuImg: {
+        width: wp(32),
+        height: hp(32)
     },
-    flashImg:{
-        width:wp(32),
-        height:hp(32),
-        marginRight:wp(16)
+    flashImg: {
+        width: wp(32),
+        height: hp(32),
+        marginRight: wp(16)
     },
-    menuBtn:{
-        flex:-1,
-        
+    menuBtn: {
+        flex: -1,
+
     }
-    
-   
-  });
+
+
+});
 
 
