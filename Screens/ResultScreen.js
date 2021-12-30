@@ -11,11 +11,12 @@ import {Result} from "../Components/Result.js"
 
  export const ResultScreen = ({route, navigation}) =>{
     const {pic} = route.params
+    const {croppedPic} = route.params
     const [showProgress, setShowProgress] = useState(true) 
     const resultRef = useRef()
     useEffect(() => {
       let mounted = true
-      resultRef.current.displayResponseText(pic)
+      resultRef.current.displayResponseText(croppedPic)
         .then(() => {
           if(mounted) {
             setShowProgress(false)
@@ -27,11 +28,11 @@ import {Result} from "../Components/Result.js"
         })
     })
 
-    const base64pic = 'data:image/png;base64,' + pic 
+   
 
     return(
     
-        <ImageBackground source={{uri:base64pic}} style={styles.container} blurRadius={8}>
+        <ImageBackground source={{uri:pic}} style={styles.container} blurRadius={8}>
           <ActivityIndicator animating={showProgress} size="large" color={colors.primaryColor}/>
           <Result ref={resultRef} navigation={navigation}/>
         </ImageBackground>
