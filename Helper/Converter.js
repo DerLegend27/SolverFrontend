@@ -17,7 +17,6 @@ import {
   
   export const absolutePx = dimension => {
     let test = dimension*PixelRatio.get()
-    console.log(test)
     return test
   };
   
