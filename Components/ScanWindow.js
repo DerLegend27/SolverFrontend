@@ -11,6 +11,8 @@ import {
     StyleSheet,
     PixelRatio,
     PanResponder,
+    UIManager,
+    findNodeHandle
 } from 'react-native'
 import React from "react";
 import { hp, wp } from "../Helper/Converter";
@@ -49,10 +51,15 @@ export class ScanWindow extends PureComponent {
             leftX: this.calcLeftX(),
             rightX: this.calcRightX(),
             topY: this.calcTopY(),
-            bottomY: this.calcBottomY()
-
+            bottomY: this.calcBottomY(),
         }
-      
+
+        this.svgCords = {}
+        
+        
+
+        
+
 
         this.panResponder = PanResponder.create({
             onStartShouldSetPanResponder: this.alwaysTrue,
@@ -61,6 +68,7 @@ export class ScanWindow extends PureComponent {
             onPanResponderMove: this.handlePanResponderMove,
         });
     }
+
 
     alwaysTrue = () => true
 
@@ -95,7 +103,13 @@ export class ScanWindow extends PureComponent {
     render() {
         return (
 
-            <Svg width={this.maxWidth} height={this.maxHeight} originY="100" style={styles.container}>
+            <Svg width={this.maxWidth} height={this.maxHeight} originY="100" style={styles.container}
+            onLayout={
+                ({nativeEvent}) => {
+                    this.svgCords = nativeEvent.layout
+                }
+            }
+            >
 
                 {/* Left-Top Corner */}
                 <Polyline
@@ -180,6 +194,7 @@ const styles = StyleSheet.create({
         flex: 0,
         position: "absolute",
         marginTop: hp(100),
+        
         
     }
 });
