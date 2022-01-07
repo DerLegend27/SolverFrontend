@@ -6,6 +6,7 @@ TouchableOpacity
 } from "react-native"
 import React, {PureComponent } from "react"
 import {wp, hp} from '../Helper/Converter';
+import { ResultView } from "./ResultView";
 
 export class Result extends PureComponent{
     constructor(props){
@@ -27,15 +28,15 @@ export class Result extends PureComponent{
 
     render(){
     
-        if(this.state.isVisible && this.state.hasFailure){
-            return <FailureView failureMessage={this.state.responseText}/>
+        if(this.state.isVisible && this.hasFailure){
+            console.log("Failure View")
+            return <FailureView failureMessage={this.state.responseText} goBack={()=>this.navigation.goBack()}/>
+
             }
         else if(this.state.isVisible){
+            console.log("ASd View")
             return (<View style={styles.container}>
-                <SuccessView solutionText={this.state.responseText}/>
-                <TouchableOpacity onPress={()=>this.navigation.goBack()}>
-                    <Text>Zurück</Text>
-                </TouchableOpacity>
+                <SuccessView solutionText={this.state.responseText} goBack={()=>this.navigation.goBack()}/>
             </View>)
             }
         else{
@@ -120,19 +121,14 @@ export class Result extends PureComponent{
 
 }
 
-const FailureView = ({failureMessage}) =>{
-    console.log("In FailureVIew")
+const FailureView = ({failureMessage, goBack}) =>{
     return (
-        <View>
-            <Text>{failureMessage}</Text>
-        </View>
+        <ResultView title={"Fehler"} btnText={"Aufgabe erneut scannen"} onPress={goBack}/>
     )
 }
-const SuccessView = ({solutionText}) =>{
+const SuccessView = ({solutionText, goBack}) =>{
     return (
-        <View>
-            <Text>{solutionText}</Text>
-        </View>
+        <ResultView title={"Inhalt"} btnText={"Weitere Aufgabe scannen"} onPress={goBack}/>
     )
 }
 

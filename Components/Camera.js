@@ -21,6 +21,7 @@ import {
 import ImageEditor from "@react-native-community/image-editor";
 
 import { captureScreen } from 'react-native-view-shot';
+import { ScanBtn } from "./ScanBtn";
 
 
 
@@ -116,9 +117,7 @@ export class Camera extends PureComponent {
                     </View>
 
                     <ScanWindow style={styles.scanWindow} ref={this.scanRef} />
-                    <TouchableOpacity onPress={this.requestCalc} style={styles.btn}>
-                        <Text style={styles.btnTxt}>Scannen</Text>
-                    </TouchableOpacity>
+                    <ScanBtn onPress={this.requestCalc} text={"Scannen"}/>
                 </RNCamera>
 
 
@@ -145,24 +144,7 @@ const styles = StyleSheet.create({
         height: "100%",
         alignItems: 'center',
     },
-    btn: {
-        flex: 0,
-        flexDirection: "column-reverse",
-        height: 55,
-        width: wp(311),
-        borderRadius: 8,
-        marginTop: "auto",
-        marginBottom: hp(32),
-        backgroundColor: colors.primaryColor,
-        alignItems: 'center',
-        justifyContent: 'center',
-
-    },
-    btnTxt: {
-        fontSize: 17,
-        color: colors.fontWhite
-
-    },
+  
     menuBar: {
         flex: 0,
         flexDirection: "row",
