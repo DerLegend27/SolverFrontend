@@ -35,9 +35,9 @@ export class Result extends PureComponent{
             }
         else if(this.state.isVisible){
             console.log("ASd View")
-            return (<View style={styles.container}>
+            return (
                 <SuccessView solutionText={this.state.responseText} goBack={()=>this.navigation.goBack()}/>
-            </View>)
+           )
             }
         else{
             return null
@@ -92,7 +92,7 @@ export class Result extends PureComponent{
             
         }catch (error){
             console.error("Json Receiving Error: " + error)
-            const failureMessage = "Verbindungsfehler"
+            const failureMessage = "Keine Verbindung zum Server"
             this.hasFailure = true
             return failureMessage
         }
@@ -123,7 +123,7 @@ export class Result extends PureComponent{
 
 const FailureView = ({failureMessage, goBack}) =>{
     return (
-        <ResultView title={"Fehler"} btnText={"Aufgabe erneut scannen"} onPress={goBack}/>
+        <ResultView title={"Fehler"} btnText={"Aufgabe erneut scannen"} onPress={goBack} mainView={<Text style={{fontSize:17, color:"black", alignSelf:"center"}}>{failureMessage}</Text>}/>
     )
 }
 const SuccessView = ({solutionText, goBack}) =>{
@@ -134,12 +134,7 @@ const SuccessView = ({solutionText, goBack}) =>{
 
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center'
-    }
+    
    
   });
 
