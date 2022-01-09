@@ -22,6 +22,7 @@ import ImageEditor from "@react-native-community/image-editor";
 
 import { captureScreen } from 'react-native-view-shot';
 import { ScanBtn } from "./ScanBtn";
+import { HelpBtn } from "./HelpBtn";
 
 
 
@@ -107,9 +108,7 @@ export class Camera extends PureComponent {
                             <Image style={styles.menuImg} source={require("../Assets/Images/menu.png")} />
                         </TouchableOpacity>
                         <View style={{ flexDirection: "row-reverse", flex: 1 }}>
-                            <TouchableOpacity style={styles.menuBtn}>
-                                <Image style={styles.menuImg} source={require("../Assets/Images/help.png")} />
-                            </TouchableOpacity>
+                            <HelpBtn/>
                             <TouchableOpacity style={styles.menuBtn}>
                                 <Image style={styles.flashImg} source={require("../Assets/Images/flash.png")} />
                             </TouchableOpacity>
