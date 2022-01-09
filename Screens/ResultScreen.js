@@ -7,6 +7,11 @@ import {
 } from 'react-native'
 import { colors } from "../Assets/colors.js";
 import {Result} from "../Components/Result.js"
+import {
+  widthPercentageToDP as wp2dp,
+  heightPercentageToDP as hp2dp,
+} from 'react-native-responsive-screen';
+import { hp } from "../Helper/Converter.js";
 
 
  export const ResultScreen = ({route, navigation}) =>{
@@ -32,8 +37,12 @@ import {Result} from "../Components/Result.js"
 
     return(
     
-        <ImageBackground source={{uri:pic}} style={styles.container} blurRadius={8}>
-          <ActivityIndicator animating={showProgress} size="large" color={colors.primaryColor}/>
+        <ImageBackground source={{uri:pic}} style={styles.container} blurRadius={10}>
+          {showProgress &&
+          <View style={styles.progress}>
+            <ActivityIndicator animating={showProgress} hidesWhenStopped={true} size="large" color={colors.primaryColor} style={styles.progress}/>
+          </View>
+          }
           <Result ref={resultRef} navigation={navigation}/>
         </ImageBackground>
     
@@ -43,12 +52,13 @@ import {Result} from "../Components/Result.js"
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-     
+      alignItems:"center",
     },
-    
-   
+    progress:{
+      flex:1,
+      alignItems:"center",
+      justifyContent:"center"
+     
+    }
   });
   
