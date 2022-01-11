@@ -1,58 +1,60 @@
 import {
-StyleSheet,
-View,
-Text,
-TouchableOpacity
+    StyleSheet,
+    View,
+    Text,
+    TouchableOpacity,
+    ScrollView
 } from "react-native"
-import React, {PureComponent } from "react"
-import {wp, hp} from '../Helper/Converter';
+import React, { PureComponent } from "react"
+import { wp, hp } from '../Helper/Converter';
 import { ResultView } from "./ResultView";
+import { InfoBox } from "./InfoBox";
 
-export class Result extends PureComponent{
-    constructor(props){
+export class Result extends PureComponent {
+    constructor(props) {
         super(props)
-        
+
         this.navigation = props.navigation
-        
+
         this.isVisible = false
         this.hasFailure = false
 
 
         this.state = {
             responseText: "",
-           
+
         }
     }
-    
-  
 
-    render(){
-    
-        if(this.state.isVisible && this.hasFailure){
+
+
+    render() {
+
+        if (this.state.isVisible && this.hasFailure) {
             console.log("Failure View")
-            return <FailureView failureMessage={this.state.responseText} goBack={()=>this.navigation.goBack()}/>
+            return <FailureView failureMessage={this.state.responseText} goBack={() => this.navigation.goBack()} />
 
-            }
-        else if(this.state.isVisible){
+        }
+        else if (this.state.isVisible) {
             console.log("ASd View")
             return (
-                <SuccessView solutionText={this.state.responseText} goBack={()=>this.navigation.goBack()}/>
-           )
-            }
-        else{
+                <SuccessView solutionText={this.state.responseText} goBack={() => this.navigation.goBack()} />
+            )
+        }
+        else {
             return null
         }
 
     }
 
-    
-    sendPicture = async(pic) =>{
-            
+
+    sendPicture = async (pic) => {
+
         const picData = new FormData();
         const url = "http://10.0.2.2:8080"
         picData.append("image", pic)
-        
-        try{
+
+        try {
             const controller = new AbortController()
             const timeoutId = setTimeout(() => controller.abort(), 5000)
             response = await fetch(
@@ -63,80 +65,105 @@ export class Result extends PureComponent{
                     body: picData,
                     headers: {
                         "Content-Type":
-                        'multipart/form-data'
+                            'multipart/form-data'
                     }
                 }
             )
             return response
-            
-            
-        }catch (error){
+
+
+        } catch (error) {
             console.error("Connection error: " + error)
 
-        } 
+        }
     }
 
-    receiveResponseText = async(pic) => {    
-        try{
+    receiveResponseText = async (pic) => {
+        try {
             const response = await this.sendPicture(pic)
             const json = await response.json()
-            if(json.status == "failure"){
+            if (json.status == "failure") {
                 const failureMessage = "Aufgabe konnte nicht erkannt werden"
                 this.setState({
-                    hasFailure : true
+                    hasFailure: true
                 })
                 return failureMessage
-            }else{
+            } else {
                 return json.solution
             }
-            
-        }catch (error){
+
+        } catch (error) {
             console.error("Json Receiving Error: " + error)
             const failureMessage = "Keine Verbindung zum Server"
             this.hasFailure = true
             return failureMessage
         }
-        
-    
+
+
     }
 
 
-    displayResponseText = async(pic) => {
-        try{
-            
+    displayResponseText = async (pic) => {
+        try {
+
             const responseText = await this.receiveResponseText(pic)
             this.setState({
-                responseText : responseText
+                responseText: responseText
             })
             console.log("im display: " + responseText)
             this.setState({
-                isVisible : true
+                isVisible: true
             })
-        }catch(error){
+        } catch (error) {
             console.error("Displaying Error: " + error)
             throw error
         }
-          
+
     }
 
 }
 
-const FailureView = ({failureMessage, goBack}) =>{
+const FailureView = ({ failureMessage, goBack }) => {
     return (
-        <ResultView title={"Fehler"} btnText={"Aufgabe erneut scannen"} onPress={goBack} mainView={<Text style={{fontSize:17, color:"black", alignSelf:"center"}}>{failureMessage}</Text>}/>
+        <ResultView title={"Fehler"} btnText={"Aufgabe erneut scannen"} onPress={goBack} mainView={
+            <InfoBox mainView={
+                <Text style={{ fontSize: 17, color: "black", alignSelf: "center" }}>{failureMessage}</Text>
+            } />
+
+        } />
     )
 }
-const SuccessView = ({solutionText, goBack}) =>{
+const SuccessView = ({ solutionText, goBack }) => {
     return (
-        <ResultView title={"Inhalt"} btnText={"Weitere Aufgabe scannen"} onPress={goBack}/>
+        <ResultView title={"Lösungen"} btnText={"Weitere Aufgabe scannen"} onPress={goBack} mainView={
+            <ScrollView>
+                <SolutionBtn name={"Nullstellen"} />
+                <SolutionBtn name={"Hi"} />
+                <SolutionBtn name={"Hi"} />
+                <SolutionBtn name={"Hi"} />
+                <SolutionBtn name={"Hi"} />
+                <SolutionBtn name={"Hi"} />
+            </ScrollView>
+        } />
     )
 }
 
+const SolutionBtn = ({ name }) => {
+    return (
+        <InfoBox mainView={
+            <View>
+                <TouchableOpacity>
+                    <Text>{name}</Text>
+                </TouchableOpacity>
+            </View>}
+        />
+    )
+}
 
 const styles = StyleSheet.create({
-    
-   
-  });
+
+
+});
 
 
 
