@@ -13,16 +13,16 @@ export const ScanBtn = ({ text, onPress }) => {
 
 const style = StyleSheet.create({
     btn: {
-        flex: 0,
-        flexDirection: "column-reverse",
         height: 55,
         width: wp(311),
         borderRadius: 8,
+        position: "absolute",
+        bottom: hp(32),
         marginTop: "auto",
-        marginBottom: hp(32),
         backgroundColor: colors.primaryColor,
         alignItems: 'center',
         justifyContent: 'center',
+        
 
     },
     btnTxt: {
