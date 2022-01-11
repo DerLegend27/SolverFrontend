@@ -13,7 +13,7 @@ export const ResultView = ({title, mainView, btnText, onPress}) =>{
         <View style={styles.container}>
             
             <Text style={styles.header}>{title}</Text>
-            <InfoBox mainView={mainView} style={styles.infoBox}/>
+            {mainView}
             <ScanBtn text={btnText} onPress={onPress}/>
         </View>
     )
@@ -31,12 +31,5 @@ const styles = StyleSheet.create({
         color: colors.fontWhite,
         fontSize: 34,
     },
-
-    infoBox:{
-        
-        marginTop: hp(200)
-        
-        
-    }
 
 })
