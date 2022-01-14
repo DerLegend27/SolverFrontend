@@ -125,7 +125,7 @@ export class Result extends PureComponent {
 
 const FailureView = ({ failureMessage, goBack }) => {
     return (
-        <ResultView title={"Fehler"} btnText={"Aufgabe erneut scannen"} onPress={goBack} mainView={
+        <ResultView title={"Fehler"} btnText={"Aufgabe erneut scannen"} onPress={goBack} scanBottom={32} mainView={
             <InfoBox mainView={
                 <Text style={{ fontSize: 17, color: "black", alignSelf: "center" }}>{failureMessage}</Text>
             } />
@@ -135,14 +135,12 @@ const FailureView = ({ failureMessage, goBack }) => {
 }
 const SuccessView = ({ solutionText, goBack }) => {
     return (
-        <ResultView title={"Lösungen"} btnText={"Weitere Aufgabe scannen"} onPress={goBack} mainView={
+        <ResultView title={"Lösungen"} scanBottom={500} btnText={"Weitere Aufgabe scannen"} onPress={goBack} mainView={
             <ScrollView>
+                <SolutionBtn name={"Rechnung"} />
+                <SolutionBtn name={"Graph"} />
                 <SolutionBtn name={"Nullstellen"} />
-                <SolutionBtn name={"Hi"} />
-                <SolutionBtn name={"Hi"} />
-                <SolutionBtn name={"Hi"} />
-                <SolutionBtn name={"Hi"} />
-                <SolutionBtn name={"Hi"} />
+                <SolutionBtn name={"Ableitung"} />
             </ScrollView>
         } />
     )
@@ -150,19 +148,24 @@ const SuccessView = ({ solutionText, goBack }) => {
 
 const SolutionBtn = ({ name }) => {
     return (
+    <TouchableOpacity style={styles.successContainer}>
         <InfoBox mainView={
             <View>
-                <TouchableOpacity>
-                    <Text>{name}</Text>
-                </TouchableOpacity>
+                    <Text style={styles.successText}>{name}</Text>
             </View>}
         />
+    </TouchableOpacity>
     )
 }
 
 const styles = StyleSheet.create({
-
-
+    successContainer:{
+       marginTop:hp(10)
+    },
+    successText:{
+        fontSize: 17,
+        color: "black"
+    }
 });
 
 

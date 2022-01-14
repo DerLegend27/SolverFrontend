@@ -116,7 +116,7 @@ export class Camera extends PureComponent {
                     </View>
 
                     <ScanWindow style={styles.scanWindow} ref={this.scanRef} />
-                    <ScanBtn onPress={this.requestCalc} text={"Scannen"}/>
+                    <ScanBtn onPress={this.requestCalc} text={"Scannen"} bottom={32}/>
                 </RNCamera>
 
 
@@ -166,6 +166,8 @@ const styles = StyleSheet.create({
         flex: -1,
 
     }
+
+    
 
 
 });

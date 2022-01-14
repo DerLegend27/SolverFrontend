@@ -7,14 +7,14 @@ import { InfoBox } from "./InfoBox";
 import { HelpBtn } from "./HelpBtn";
 
 
-export const ResultView = ({title, mainView, btnText, onPress}) =>{
+export const ResultView = ({title, mainView, btnText, onPress, scanBottom}) =>{
     console.log("In FailureVIew")
     return (
         <View style={styles.container}>
             
             <Text style={styles.header}>{title}</Text>
             {mainView}
-            <ScanBtn text={btnText} onPress={onPress}/>
+            <ScanBtn text={btnText} onPress={onPress} bottom={scanBottom}/>
         </View>
     )
 }
