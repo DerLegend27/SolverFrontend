@@ -3,12 +3,27 @@ import {
     View,
     Text,
     TouchableOpacity,
-    ScrollView
+    ScrollView,
+    Animated,
+    LayoutAnimation,
+    UIManager
 } from "react-native"
-import React, { PureComponent } from "react"
+import React, { PureComponent, useRef } from "react"
 import { wp, hp } from '../Helper/Converter';
 import { ResultView } from "./ResultView";
 import { InfoBox } from "./InfoBox";
+import { useState } from "react/cjs/react.development";
+import Steps from "./Solver/Components/Steps";
+import MathJax from "react-native-mathjax";
+import { mmlOptions } from "./Solver/mmlOptions";
+
+
+if (
+    Platform.OS === "android" &&
+    UIManager.setLayoutAnimationEnabledExperimental
+  ) {
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+  }
 
 export class Result extends PureComponent {
     constructor(props) {
@@ -146,17 +161,34 @@ const SuccessView = ({ solutionText, goBack }) => {
     )
 }
 
+
+
 const SolutionBtn = ({ name }) => {
+    const btnHeight = 30
+    const translateAnim = new Animated.Value(btnHeight)
+    const [expanded, setExpanded] = useState(false)
+
+    startSizeAnim = () =>{
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
+        setExpanded(!expanded)
+    }
+
     return (
-    <TouchableOpacity style={styles.successContainer}>
+    <TouchableOpacity style={styles.successContainer} onPress={startSizeAnim
+    }>
         <InfoBox mainView={
-            <View>
+            <Animated.View style={{minHeight: 30}}>
                     <Text style={styles.successText}>{name}</Text>
-            </View>}
+                    {expanded && <Steps input={"2x +3 = 4x + 5"}/>}
+            </Animated.View>}
         />
     </TouchableOpacity>
     )
+
+   
 }
+
+
 
 const styles = StyleSheet.create({
     successContainer:{
