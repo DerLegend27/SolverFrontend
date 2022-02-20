@@ -650,16 +650,16 @@ Change.changeFormatFunctionMap[ChangeTypes.SIMPLIFY_TERMS] = function(step) {
   return `\\text{${Change.ChangeText[step.changeType]}}`;
 };
 
-// e.g. 2 = 2
+// e.g. 2 = 3
 Change.changeFormatFunctionMap[ChangeTypes.STATEMENT_IS_FALSE] = function(step) {
   const comparator = step.newEquation.comparator;
-  return `\\text{Die linke Seite ${COMPARATOR_TO_STRING[comparator]} der rechten Seite`;
+  return `\\text{Die linke Seite ist nicht ${COMPARATOR_TO_STRING[comparator]} der rechten Seite}`;
 };
 
-// e.g. 2 = 3
+// e.g. 2 = 2
 Change.changeFormatFunctionMap[ChangeTypes.STATEMENT_IS_TRUE] = function(step) {
   const comparator = step.newEquation.comparator;
-  return `\\text{Die linke Seite ${COMPARATOR_TO_STRING[comparator]} der rechten Seite}`;
+  return `\\text{Die linke Seite ist ${COMPARATOR_TO_STRING[comparator]} der rechten Seite}`;
 };
 
 // e.g. x + 3 = 2 -> x + 3 - 3 = 2 - 3
@@ -705,7 +705,7 @@ Change.ChangeText = {
   CANCEL_MINUSES: 'Streiche die Minuszeichen im Zähler und Nenner',
   CANCEL_ROOT: 'Streiche die Wurzel',
   CANCEL_TERMS: 'Streiche gleiche Terme in Zähler und Nenner',
-  COLLECT_AND_COMBINE_LIKE_TERMS: 'Addiere gleiche Terme',
+  COLLECT_AND_COMBINE_LIKE_TERMS: 'Fasse zusammen',
   COLLECT_EXPONENTS: 'Addiere die Exponenten',
   COLLECT_LIKE_TERMS: 'Finde die gleichen Terme und gruppiere sie',
   COMBINE_NUMERATORS: 'Addiere die Zähler mit den gleichen Nennern',
@@ -740,7 +740,7 @@ Change.ChangeText = {
   REDUCE_ZERO_NUMERATOR: 'Schreibe 0 dividiert durch 0 als 0',
   REMOVE_EXPONENT_BY_ONE: 'Schreibe jeden Term mit dem Exponenten 1 ohne Exponent',
   REDUCE_EXPONENT_BY_ZERO: 'Schreibe jeden Term mit dem Exponenten 0 als 1',
-  REMOVE_ADDING_ZERO: 'Elimiere 0 beim Addieren',
+  REMOVE_ADDING_ZERO: 'Eliminiere 0 beim Addieren',
   REMOVE_MULTIPLYING_BY_NEGATIVE_ONE: 'Schreibe jeglichen Term multipliziert mit -1 als negativ',
   REMOVE_MULTIPLYING_BY_ONE: 'Schreibe jeglichen Term multipliziert mit 1 als einfach nur den Term',
   RESOLVE_DOUBLE_MINUS: 'Schreibe negative Subtraktion als Addition',
