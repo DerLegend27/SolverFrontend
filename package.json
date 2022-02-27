@@ -19,7 +19,7 @@
     "react-native-camera": "^4.2.1",
     "react-native-fast-image": "^8.5.11",
     "react-native-fs": "^2.18.0",
-    "react-native-mathjax": "^2.1.2",
+    "react-native-mathjax-svg": "^0.9.9",
     "react-native-responsive-screen": "^1.4.2",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.9.0",
