@@ -3,9 +3,10 @@ import mathsteps from 'mathsteps';
 
 import print from '../print.js';
 import Step from './Step.js';
-import { View } from 'react-native';
-import MathJax from 'react-native-mathjax';
+import { View, Text } from 'react-native';
+import MathJax from 'react-native-mathjax-svg';
 import { mmlOptions } from '../mmlOptions.js';
+import { organizeSteps } from '../organizeSteps.js';
 
 export default class Steps extends PureComponent {
   
@@ -23,10 +24,10 @@ export default class Steps extends PureComponent {
   renderSteps = (steps) => {
     const renderedSteps = steps.map(
       (step, index) => <Step step={step} key={index}/>);
-    return <View>
-      <MathJax mathJaxOptions={mmlOptions} html={"$"+print.oldNode(steps[0])+"$"}/>
+    return <View style={{marginTop:20}}>
+      <MathJax>{print.oldNode(steps[0].step)}</MathJax>
       {renderedSteps}
-    </View>;
+    </View>
   }
 
   render() {
@@ -38,10 +39,29 @@ export default class Steps extends PureComponent {
 
     if (steps.length === 0) {
       console.log("Keine Steps")
+      return <View><Text>Gleichung nicht erkannt</Text></View>
     }
+    const orgSteps = organizeSteps(steps)
+    /*orgSteps.forEach(step =>{
+      console.log("Main: " + step.step.changeType +"\n")
+      if(step.substeps){
+        step.substeps.forEach( sub =>{
+          console.log("Sub: "+sub.changeType)
+        }
+        )
+      } 
 
+    }) */
+    
+
+   /* steps.forEach(step =>{
+      console.log("Step: " + step.changeType + "\n")
+      step.substeps.forEach(sub =>{
+        console.log("Sub: " + sub.changeType)
+      })
+    }) */
     return <View>
-      {this.renderSteps(steps)}
+      {this.renderSteps(orgSteps)}
     </View>;
   }
 }
