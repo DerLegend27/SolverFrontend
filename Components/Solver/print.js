@@ -1,5 +1,5 @@
 const printEquation = (equation) => {
-    return `${equation.leftNode.toTex()} ${equation.comparator} ${equation.rightNode.toTex()}`;
+  return `${equation.leftNode.toTex()} ${equation.comparator} ${equation.rightNode.toTex()}`;
   }
   
   const printOldNode = (step) => {
@@ -10,7 +10,13 @@ const printEquation = (equation) => {
     return step.newNode ? step.newNode.toTex() : printEquation(step.newEquation);
   }
   
+  const printOrgNode = (orgstep) =>{
+    return orgstep.substeps ? printNewNode(orgstep.substeps[orgstep.substeps.length-1]) : printNewNode(orgstep.step)
+  }
+
+
   module.exports = {
     oldNode: printOldNode,
-    newNode: printNewNode
+    newNode: printNewNode,
+    orgNode: printOrgNode
   }
