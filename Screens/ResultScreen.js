@@ -20,21 +20,18 @@ import { hp } from "../Helper/Converter.js";
     const [showProgress, setShowProgress] = useState(true) 
     const resultRef = useRef()
     useEffect(() => {
-      let mounted = true
+      if(showProgress){
+      console.log("Mountin")
       resultRef.current.displayResponseText(croppedPic)
         .then(() => {
-          if(mounted) {
             setShowProgress(false)
-          }
-
-      return () => {
-        mounted = false
-      }   
+          
         })
-    })
+      }
+    }) 
 
    
-
+    console.log("Check: REs")
     return(
     
         <ImageBackground source={{uri:pic}} style={styles.container} blurRadius={10}>
