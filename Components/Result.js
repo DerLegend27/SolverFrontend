@@ -8,15 +8,14 @@ import {
     LayoutAnimation,
     UIManager
 } from "react-native"
-import React, { PureComponent, useRef } from "react"
+import React, { PureComponent, useEffect, useRef } from "react"
 import { wp, hp } from '../Helper/Converter';
 import { ResultView } from "./ResultView";
 import { InfoBox } from "./InfoBox";
 import { useState } from "react/cjs/react.development";
 import Steps from "./Solver/Components/Steps";
-import MathJax from "react-native-mathjax";
 import { mmlOptions } from "./Solver/mmlOptions";
-
+const eyo = 0
 
 if (
     Platform.OS === "android" &&
@@ -37,7 +36,6 @@ export class Result extends PureComponent {
 
         this.state = {
             responseText: "",
-
         }
     }
 
@@ -64,14 +62,13 @@ export class Result extends PureComponent {
 
 
     sendPicture = async (pic) => {
-
         const picData = new FormData();
-        const url = "http://10.0.2.2:8080"
+        const url = "http://10.0.2.2:5000/api"
         picData.append("image", pic)
-
+        var response= ""
         try {
             const controller = new AbortController()
-            const timeoutId = setTimeout(() => controller.abort(), 5000)
+            const timeoutId = setTimeout(() => controller.abort(), 10000)
             response = await fetch(
                 url,
                 {
@@ -85,9 +82,11 @@ export class Result extends PureComponent {
                 }
             )
             return response
+            console.log("debug")
 
 
         } catch (error) {
+            console.log("res: " + response)
             console.error("Connection error: " + error)
 
         }
@@ -113,6 +112,8 @@ export class Result extends PureComponent {
             this.hasFailure = true
             return failureMessage
         }
+        
+      
 
 
     }
@@ -125,10 +126,13 @@ export class Result extends PureComponent {
             this.setState({
                 responseText: responseText
             })
+          
             console.log("im display: " + responseText)
             this.setState({
                 isVisible: true
             })
+
+           
         } catch (error) {
             console.error("Displaying Error: " + error)
             throw error
@@ -152,10 +156,10 @@ const SuccessView = ({ solutionText, goBack }) => {
     return (
         <ResultView title={"Lösungen"} scanBottom={500} btnText={"Weitere Aufgabe scannen"} onPress={goBack} mainView={
             <ScrollView>
-                <SolutionBtn name={"Rechnung"} />
-                <SolutionBtn name={"Graph"} />
-                <SolutionBtn name={"Nullstellen"} />
-                <SolutionBtn name={"Ableitung"} />
+                <SolutionBtn name={"Rechnung"} resView={<Steps input={solutionText +"=0"}/>}/>
+                <SolutionBtn name={"Graph"} resView = {<View></View>} />
+                <SolutionBtn name={"Nullstellen"} resView = {<View></View>} />
+                <SolutionBtn name={"Ableitung"} resView = {<View></View>} />
             </ScrollView>
         } />
     )
@@ -163,28 +167,73 @@ const SuccessView = ({ solutionText, goBack }) => {
 
 
 
-const SolutionBtn = ({ name }) => {
-    const btnHeight = 30
-    const translateAnim = new Animated.Value(btnHeight)
-    const [expanded, setExpanded] = useState(false)
+class SolutionBtn extends PureComponent{
+    
+    constructor(props) {
+        super(props)
+        const{name, resView} = props
+        this.resView = resView
+        this.name = name
+        this.expanded = false
+        const btnHeight = 30
 
-    startSizeAnim = () =>{
+      /*  this.state ={
+            maxHeight:1000,
+            maxWidth:1000
+        } */
+
+        this.state={
+            expanded:false
+        }
+
+        
+        
+    }
+    
+    componentDidMount(){
+     /*   this.setState({
+            maxHeight:0,
+            maxWidth:0,
+            
+        }) */
+    }
+    
+    expandBtn = () =>{
         LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
-        setExpanded(!expanded)
+        
+        if(!this.state.expanded){
+          /*  this.setState({
+                maxHeight:"100%",
+                maxWidth:1000
+            }) */
+            this.setState(
+                {expanded:true}
+            )
+            
+        }
+
+      //  this.expanded = !this.expanded
     }
 
-    return (
-    <TouchableOpacity style={styles.successContainer} onPress={startSizeAnim
-    }>
+ 
+
+  
+
+    render() {
+    return(
+    <TouchableOpacity style={styles.successContainer} onPress={this.expandBtn}>
         <InfoBox mainView={
-            <Animated.View style={{minHeight: 30}}>
-                    <Text style={styles.successText}>{name}</Text>
-                    {expanded && <Steps input={"2x +3 = 4x + 5"}/>}
-            </Animated.View>}
+           <Animated.View style={{minHeight: 30}}>
+                    <Text style={styles.successText}>{this.name}</Text>
+    
+                    <View>
+                       {this.state.expanded && this.resView}
+                    </View>
+        </Animated.View> } 
         />
     </TouchableOpacity>
     )
-
+        }
    
 }
 
