@@ -357,10 +357,12 @@ Change.changeFormatFunctionMap[ChangeTypes.FACTOR_INTO_PRIMES] = function(step) 
   if (oldNodes.length !== 1 || newNodes.length < oldNodes.length || newNodes.length > 5) {
     return null;
   }
+}
+  
 
-  const before = nodesToString(oldNodes);
-  const after = nodesToString(newNodes);
-  return `\\text{Faktorisiere } ${before} \\text{ zu } ${after}`;
+Change.changeFormatFunctionMap[ChangeTypes.FIND_ROOTS] = function(step) {
+   return `\\text{${Change.ChangeText[step.changeType]}}`
+
 };
 
 // e.g. 2x^2 + 3x^2 + 5x^2 -> (2+3+5)x^2
@@ -722,6 +724,7 @@ Change.ChangeText = {
   DIVISION_BY_ONE: 'Schreibe alle Terme durch 1 als einfach nur den Term',
   EVALUATE_DISTRIBUTED_NTH_ROOT: 'Nimm die Wurzel aller Terme',
   FACTOR_INTO_PRIMES: 'Faktorisiere die Nummer',
+  FIND_ROOTS: 'Finde die Nullstellen',
   GROUP_COEFFICIENTS: 'Gruppiere die Koeffiziente',
   GROUP_TERMS_BY_ROOT: 'Gruppiere wiederholende Faktoren',
   MULTIPLY_BOTH_SIDES_BY_INVERSE_FRACTION: 'Multipliziere beide Seiten mit dem Kehrbruch',
