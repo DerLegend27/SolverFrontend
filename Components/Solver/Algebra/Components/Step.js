@@ -6,7 +6,7 @@ import Change from '../Change.js';
 import { TouchableOpacity, View, Text } from 'react-native';
 import mmlOptions from "../mmlOptions.js";
 import MathJax from 'react-native-mathjax-svg';
-import { colors } from '../../../Assets/colors.js';
+import { colors } from '../../../../Assets/colors.js';
 
 export default class Step extends PureComponent {
 

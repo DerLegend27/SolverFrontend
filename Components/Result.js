@@ -13,8 +13,8 @@ import { wp, hp } from '../Helper/Converter';
 import { ResultView } from "./ResultView";
 import { InfoBox } from "./InfoBox";
 import { useState } from "react/cjs/react.development";
-import Steps from "./Solver/Components/Steps";
-import { mmlOptions } from "./Solver/mmlOptions";
+import Steps from "./Solver/Algebra/Components/Steps";
+import { mmlOptions } from "./Solver/Algebra/mmlOptions";
 const eyo = 0
 
 if (
@@ -156,7 +156,7 @@ const SuccessView = ({ solutionText, goBack }) => {
     return (
         <ResultView title={"Lösungen"} scanBottom={500} btnText={"Weitere Aufgabe scannen"} onPress={goBack} mainView={
             <ScrollView>
-                <SolutionBtn name={"Rechnung"} resView={<Steps input={solutionText +"=0"}/>}/>
+                <SolutionBtn name={"Rechnung"} resView={<Steps input={"6x^2 + 10" +"=0"}/>}/>
                 <SolutionBtn name={"Graph"} resView = {<View></View>} />
                 <SolutionBtn name={"Nullstellen"} resView = {<View></View>} />
                 <SolutionBtn name={"Ableitung"} resView = {<View></View>} />

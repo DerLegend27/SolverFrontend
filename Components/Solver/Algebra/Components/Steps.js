@@ -33,6 +33,7 @@ export default class Steps extends PureComponent {
   render() {
     const {input} = this.props;
     const isEquation = this.isEquation(input);
+    console.log(input)
     const steps = isEquation
       ? mathsteps.solveEquation(input)
       : mathsteps.simplifyExpression(input);

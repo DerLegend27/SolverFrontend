@@ -86,7 +86,6 @@ export class Camera extends PureComponent {
 
 
     takePicture = async () => {
-
         try {
             let uri = await captureScreen()
             return uri
