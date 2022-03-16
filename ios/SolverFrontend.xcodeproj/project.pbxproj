@@ -159,7 +159,6 @@
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				5A7DD7211E00F628257D7608 /* [CP] Embed Pods Frameworks */,
 				73E371BD26CE9A8E9195D07C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -182,7 +181,6 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				766B03F865E8EC58B50010CA /* [CP] Embed Pods Frameworks */,
 				835CA74CF9CE3806F8B91133 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -286,23 +284,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		5A7DD7211E00F628257D7608 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SolverFrontend-SolverFrontendTests/Pods-SolverFrontend-SolverFrontendTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SolverFrontend-SolverFrontendTests/Pods-SolverFrontend-SolverFrontendTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SolverFrontend-SolverFrontendTests/Pods-SolverFrontend-SolverFrontendTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		73E371BD26CE9A8E9195D07C /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -318,23 +299,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SolverFrontend-SolverFrontendTests/Pods-SolverFrontend-SolverFrontendTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		766B03F865E8EC58B50010CA /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SolverFrontend/Pods-SolverFrontend-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SolverFrontend/Pods-SolverFrontend-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SolverFrontend/Pods-SolverFrontend-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		835CA74CF9CE3806F8B91133 /* [CP] Copy Pods Resources */ = {
@@ -431,7 +395,7 @@
 			baseConfigurationReference = F3375A2DB1228E0A443C8E5E /* Pods-SolverFrontend-SolverFrontendTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = KGKLLXAD9F;
+				DEVELOPMENT_TEAM = 7S56KA7WZ8;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -460,7 +424,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = KGKLLXAD9F;
+				DEVELOPMENT_TEAM = 7S56KA7WZ8;
 				INFOPLIST_FILE = SolverFrontendTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -486,7 +450,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = KGKLLXAD9F;
+				DEVELOPMENT_TEAM = 7S56KA7WZ8;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SolverFrontend/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -513,7 +477,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = KGKLLXAD9F;
+				DEVELOPMENT_TEAM = 7S56KA7WZ8;
 				INFOPLIST_FILE = SolverFrontend/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -564,7 +528,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -630,7 +594,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

@@ -63,7 +63,7 @@ export class Result extends PureComponent {
 
     sendPicture = async (pic) => {
         const picData = new FormData();
-        const url = "http://10.0.2.2:5000/api"
+        const url = "http://178.6.243.103/api"
         picData.append("image", pic)
         var response= ""
         try {
@@ -81,6 +81,7 @@ export class Result extends PureComponent {
                     }
                 }
             )
+            console.log(response.json())
             return response
             console.log("debug")
 
@@ -96,6 +97,7 @@ export class Result extends PureComponent {
         try {
             const response = await this.sendPicture(pic)
             const json = await response.json()
+
             if (json.status == "failure") {
                 const failureMessage = "Aufgabe konnte nicht erkannt werden"
                 this.setState({
@@ -122,7 +124,8 @@ export class Result extends PureComponent {
     displayResponseText = async (pic) => {
         try {
 
-            const responseText = await this.receiveResponseText(pic)
+         //   const responseText = await this.receiveResponseText(pic)
+         const responseText = await this.receiveResponseText(pic)
             this.setState({
                 responseText: responseText
             })

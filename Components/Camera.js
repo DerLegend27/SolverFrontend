@@ -104,7 +104,7 @@ export class Camera extends PureComponent {
 
                     <View style={styles.menuBar}>
                         <TouchableOpacity style={styles.menuBtn}>
-                            <Image style={styles.menuImg} source={require("../Assets/Images/menu.png")} />
+                            <Image style={styles.menuImg} source={require("../Assets/Images/Menu.png")} />
                         </TouchableOpacity>
                         <View style={{ flexDirection: "row-reverse", flex: 1 }}>
                             <HelpBtn/>
