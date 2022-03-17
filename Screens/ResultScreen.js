@@ -16,7 +16,14 @@ import { hp } from "../Helper/Converter.js";
 
  export const ResultScreen = ({route, navigation}) =>{
     const {pic} = route.params
-    const {croppedPic} = route.params
+    var field = ""
+    
+    var {croppedPic} = route.params
+
+    if(route.params.field){
+      field = route.params.field
+      croppedPic = "field:"+field
+    }
     const [showProgress, setShowProgress] = useState(true) 
     const resultRef = useRef()
     useEffect(() => {
@@ -40,7 +47,7 @@ import { hp } from "../Helper/Converter.js";
             <ActivityIndicator animating={showProgress} hidesWhenStopped={true} size="large" color={colors.primaryColor} style={styles.progress}/>
           </View>
           }
-          <Result ref={resultRef} navigation={navigation}/>
+          <Result ref={resultRef} navigation={navigation} textField={field}/>
         </ImageBackground>
     
    );

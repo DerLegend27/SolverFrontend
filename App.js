@@ -12,6 +12,7 @@ import {HomeScreen} from './Screens/HomeScreen';
 import {ResultScreen} from './Screens/ResultScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { InputScreen } from './Screens/InputScreen';
 
 
 
@@ -24,6 +25,7 @@ const App = () => {
       <Stack.Navigator screenOptions ={{headerShown:false, gestureEnabled: false}}>
        <Stack.Screen name="Home" component={HomeScreen} options={{animationEnabled: false}} />
         <Stack.Screen name="Result" component={ResultScreen} options={{animationEnabled: false}}/>
+        <Stack.Screen name="Input" component={InputScreen} options={{animationEnabled: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

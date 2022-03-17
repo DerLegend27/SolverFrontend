@@ -15,6 +15,9 @@ import { InfoBox } from "./InfoBox";
 import { useState } from "react/cjs/react.development";
 import Steps from "./Solver/Algebra/Components/Steps";
 import { mmlOptions } from "./Solver/Algebra/mmlOptions";
+import QSteps from "./Solver/Questions/Components/QSteps";
+
+
 const eyo = 0
 
 if (
@@ -32,7 +35,7 @@ export class Result extends PureComponent {
 
         this.isVisible = false
         this.hasFailure = false
-
+        this.field = false
 
         this.state = {
             responseText: "",
@@ -51,7 +54,7 @@ export class Result extends PureComponent {
         else if (this.state.isVisible) {
             console.log("ASd View")
             return (
-                <SuccessView solutionText={this.state.responseText} goBack={() => this.navigation.goBack()} />
+                <SuccessView solutionText={this.state.responseText} goBack={() => this.navigation.goBack()} field={this.field} />
             )
         }
         else {
@@ -81,7 +84,6 @@ export class Result extends PureComponent {
                     }
                 }
             )
-            console.log(response.json())
             return response
             console.log("debug")
 
@@ -92,6 +94,8 @@ export class Result extends PureComponent {
 
         }
     }
+
+    
 
     receiveResponseText = async (pic) => {
         try {
@@ -121,11 +125,21 @@ export class Result extends PureComponent {
     }
 
 
+    
+
     displayResponseText = async (pic) => {
         try {
-
-         //   const responseText = await this.receiveResponseText(pic)
-         const responseText = await this.receiveResponseText(pic)
+            
+        
+            var responseText = ""
+         if(pic.includes("field")){
+            const question = pic.split("field:")[1]
+             responseText = await this.receiveGpt(question)
+             this.field = true
+             console.log("resa: " ,responseText)
+         }else{
+             responseText = await this.receiveResponseText(pic)
+         }
             this.setState({
                 responseText: responseText
             })
@@ -143,7 +157,43 @@ export class Result extends PureComponent {
 
     }
 
+
+    receiveGpt = async(question) =>{
+        const picData = new FormData();
+        const url = "http://178.6.243.103/nlp"
+        picData.append("text", question)
+        var response= ""
+        try {
+            const controller = new AbortController()
+            const timeoutId = setTimeout(() => controller.abort(), 10000)
+            response = await fetch(
+                url,
+                {
+                    signal: controller.signal,
+                    method: 'post',
+                    body: question,
+                    headers: {
+                        "Content-Type":
+                            'multipart/form-data'
+                    }
+                }
+            )
+
+            console.log("jason: " ,response.json())
+            return response.json().solution
+            console.log("debug")
+
+
+        } catch (error) {
+            console.log("res: " + response)
+            console.error("Connection error: " + error)
+
+        }
+    }
+
 }
+
+
 
 const FailureView = ({ failureMessage, goBack }) => {
     return (
@@ -155,11 +205,24 @@ const FailureView = ({ failureMessage, goBack }) => {
         } />
     )
 }
-const SuccessView = ({ solutionText, goBack }) => {
+const SuccessView = ({ solutionText, goBack, field }) => {
+    if(field){
+        console.log("sos ", solutionText)
+        return(
+            <ResultView title={"Lösungen"} scanBottom={500} btnText={"Weitere Aufgabe scannen"} onPress={goBack} mainView={
+                <ScrollView>
+                    <SolutionBtn name={"Rechnung"} resView={<QSteps input={solutionText}/>}/>
+                    <SolutionBtn name={"Graph"} resView = {<View></View>} />
+                    <SolutionBtn name={"Nullstellen"} resView = {<View></View>} />
+                    <SolutionBtn name={"Ableitung"} resView = {<View></View>} />
+                </ScrollView>
+            } />
+        )
+    }
     return (
         <ResultView title={"Lösungen"} scanBottom={500} btnText={"Weitere Aufgabe scannen"} onPress={goBack} mainView={
             <ScrollView>
-                <SolutionBtn name={"Rechnung"} resView={<Steps input={"6x^2 + 10" +"=0"}/>}/>
+                <SolutionBtn name={"Rechnung"} resView={<Steps input={"0=2+5x"}/>}/>
                 <SolutionBtn name={"Graph"} resView = {<View></View>} />
                 <SolutionBtn name={"Nullstellen"} resView = {<View></View>} />
                 <SolutionBtn name={"Ableitung"} resView = {<View></View>} />

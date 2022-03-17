@@ -96,15 +96,19 @@ export class Camera extends PureComponent {
         }
     }
 
+    wordProb = () => {
+        this.props.navigation.navigate('Input')
+    }
+
     render() {
         return (
             <View style={styles.container}>
-                <RNCamera ref={this.camRef} captureAudio={false} style={styles.cam} type={RNCamera.Constants.Type.back}>
+                <RNCamera ref={this.camRef} captureAudio={false} style={styles.cam} type={RNCamera.Constants.Type.back} autoFocus={RNCamera.Constants.AutoFocus.on} >
 
 
                     <View style={styles.menuBar}>
                         <TouchableOpacity style={styles.menuBtn}>
-                            <Image style={styles.menuImg} source={require("../Assets/Images/Menu.png")} />
+                            <Image style={styles.menuImg} source={require("../Assets/Images/menu.png")} />
                         </TouchableOpacity>
                         <View style={{ flexDirection: "row-reverse", flex: 1 }}>
                             <HelpBtn/>
@@ -116,6 +120,7 @@ export class Camera extends PureComponent {
 
                     <ScanWindow style={styles.scanWindow} ref={this.scanRef} />
                     <ScanBtn onPress={this.requestCalc} text={"Scannen"} bottom={32}/>
+                    <ScanBtn onPress={this.wordProb} text={"Textaufgabe"} bottom={100}/>
                 </RNCamera>
 
 

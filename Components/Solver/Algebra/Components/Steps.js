@@ -40,7 +40,7 @@ export default class Steps extends PureComponent {
 
     if (steps.length === 0) {
       console.log("Keine Steps")
-      return <View><Text>Gleichung nicht erkannt</Text></View>
+      return <View><Text style={{ fontSize: 17, color: "black", alignSelf: "center" }}>Gleichung nicht rechenbar: {input}</Text></View>
     }
     const orgSteps = organizeSteps(steps)
     /*orgSteps.forEach(step =>{
